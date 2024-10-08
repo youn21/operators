@@ -7,8 +7,6 @@ spec:
     generate: false
     name: mariadb-password
     key: DB_PASSWORD
-  galera:
-    enabled: false
   metrics:
     passwordSecretKeyRef:
       generate: true
