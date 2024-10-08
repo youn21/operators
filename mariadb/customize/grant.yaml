@@ -1,0 +1,15 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: test
+spec:
+  database: test
+  grantOption: false
+  host: '%'
+  mariaDbRef:
+    name: mariadb
+    waitForIt: false
+  privileges:
+    - ALL PRIVILEGES
+  table: '*'
+  username: new_user

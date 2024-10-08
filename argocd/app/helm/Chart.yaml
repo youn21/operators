@@ -1,0 +1,9 @@
+apiVersion: v2
+description: Grr with ArgoCD
+name: my-grr
+type: application
+version: 1.0.0
+dependencies:
+  - name: grr
+    version: 0.1.0
+    repository: https://plmlab.math.cnrs.fr/api/v4/projects/9834/packages/helm/stable 

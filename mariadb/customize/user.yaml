@@ -1,0 +1,18 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: test-user
+spec:
+  host: '%'
+  mariaDbRef:
+    name: mariadb
+    waitForIt: false
+  maxUserConnections: 20
+  name: new_user
+  passwordPlugin: {}
+  passwordSecretKeyRef:
+    key: DB_PASSWORD
+    name: mariadb-password
+  # si le secret a en plus un label k8s.mariadb.com/watch de positionné, 
+  # le mot de passe est synchronisé s'il est mis à jour dans le secret
+  # Ce qui peut être fait dans le SealedSecret...

@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grr-helm
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: argocd/app/helm
+    repoURL: https://plmlab.math.cnrs.fr/anf2024/operators.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grr-static
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: argocd/app/static
+    repoURL: https://plmlab.math.cnrs.fr/anf2024/operators.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+

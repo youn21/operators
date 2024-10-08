@@ -1,0 +1,17 @@
+my-grr:
+  mariadb:
+    enabled: false
+    externalHost: mariadb
+    auth:
+      existingSecret: mariadb-password
+      createSecret: false
+  ingress:
+    enabled: true
+    className: "openshift-default"
+    annotations:
+      route.openshift.io/termination: edge
+    hosts:
+      - host: change_me.apps.anf.math.cnrs.fr
+        paths:
+          - path: /
+            pathType: Prefix

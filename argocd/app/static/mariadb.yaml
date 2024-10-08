@@ -1,0 +1,25 @@
+kind: MariaDB
+apiVersion: k8s.mariadb.com/v1alpha1
+metadata:
+  name: mariadb
+spec:
+  rootPasswordSecretKeyRef:
+    generate: false
+    name: mariadb-password
+    key: mariadb-root-password
+  galera:
+    enabled: false
+  metrics:
+    passwordSecretKeyRef:
+      generate: true
+      name: mariadb-metrics
+      key: password
+    enabled: true
+  storage:
+    size: 1Gi
+  passwordSecretKeyRef:
+    generate: false
+    name: mariadb-password
+    key: mariadb-password
+  database: grr
+  username: grr_user

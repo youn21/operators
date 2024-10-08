@@ -1,0 +1,42 @@
+kind: ArgoCD
+apiVersion: argoproj.io/v1beta1
+metadata:
+  name: argocd-grr
+spec:
+  controller:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 512Mi 
+      requests:
+        cpu: 50m
+        memory: 32Mi
+  ha:
+    enabled: false
+  redis:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 32Mi
+      requests:
+        cpu: 50m
+        memory: 28Mi
+  repo:
+    resources:
+      limits:
+        cpu: 200m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 32Mi
+  server:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 64Mi
+      requests:
+        cpu: 25m
+        memory: 32Mi
+    route:
+      enabled: true
+
