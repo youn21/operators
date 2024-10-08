@@ -1,4 +1,4 @@
-my-grr:
+grr:
   mariadb:
     enabled: false
     externalHost: mariadb

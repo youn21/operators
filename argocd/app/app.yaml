@@ -5,6 +5,7 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
+    namespace: anf-phil
   project: default
   source:
     path: argocd/app/helm
@@ -22,6 +23,7 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
+    namespace: anf-phil
   project: default
   source:
     path: argocd/app/static
