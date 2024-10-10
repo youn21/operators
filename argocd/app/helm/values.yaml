@@ -4,7 +4,6 @@ grr:
     externalHost: mariadb
     auth:
       existingSecret: mariadb-password
-      createSecret: false
   ingress:
     enabled: true
     className: "openshift-default"
