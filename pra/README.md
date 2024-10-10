@@ -2,7 +2,7 @@
 
 De manière générale, considérons que travailler dans le Cloud ne nous protège pas de la perte des données, bien au contraire... Considérons donc que notre cluster Kubernetes ne doit pas être le seul lieu pour contenir nos données. Il faut donc que ces données soient copiées ailleurs, tout le temps.
 
-Pour cela, notre application doit impérativement être accompagnée d'un système qui copie les données ailleurs (ici notre base de données MariaDB). Et naturellement, nous allons nous appuyer sur un stockage en tant que service qui est le stockage S3 (initialement développé par Amazon, accessible via le protocole HTTPS).
+Pour cela, notre application doit impérativement être accompagnée d'un système qui sauvegarde les données hors de mon Cloud (ici notre base de données MariaDB). Et naturellement, nous allons nous appuyer sur un stockage en tant que service qui est le stockage S3 (initialement développé par Amazon, accessible via le protocole HTTPS).
 
 Pour les besoins de notre TP, le *ailleurs* sera simplement un autre namespace/projet sur ce cluster Openshift.
 
@@ -22,6 +22,8 @@ spec:
   generateBucketName: pra
   storageClassName: local-storage.noobaa.io
 ```
+
+## Mise en place de notre PRA
 
 - Créez un autre projet et à l'intérieur créez votre ObjectBucketClaim selon l'exemple ci-dessus.
 - Vous obtiendrez les informations de connexion à votre stockage en interrogeant le Secret et la ConfigMap du nom de votre OBC.
@@ -54,4 +56,4 @@ spec:
 
 Déposez dans votre dossier `manifests` ArgoCD le SealedSecret et la ressource Backup...
 
-Maintenant, vous pouvez détruire votre projet, le récréer, installez votre ArgoCD et c'est reparti !
+Maintenant, vous pouvez détruire votre projet, le récréer, redéployez `argocd.yaml` et `app.yaml` depuis votre dossier `argocd` et c'est reparti !
