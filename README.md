@@ -13,6 +13,7 @@ Pour la suite de cette formation, nous allons explorer l'apport des opérateurs 
 
 Et demain nous verrons :
 
+- le PRA
 - Prometheus
 - Grafana
 
