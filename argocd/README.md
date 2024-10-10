@@ -31,9 +31,9 @@ Maintenant nous avons la machinerie pour appliquer notre configuration en se bas
 
 Ce que vous devez faire :
 
-1) modifiez les deux Applications ArgoCD pour pointer sur votre dépôt et corrigez le nom du namespace pour celui correspondant à votre projet Openshift
+1) modifiez [les deux Applications ArgoCD](/argocd/app/app.yaml) pour pointer sur votre dépôt et corrigez le nom du namespace pour celui correspondant à votre projet Openshift
 2) corrigez l'URL de l'Ingress dans les values du chart Helm
-3) Créez un SealedSecret pour les secrets de connexion à MariaDB
+3) Créez un SealedSecret pour les secrets de connexion à MariaDB que vous déposez dans le dossier `manifests`
 
 Quand cela est prêt, vous pouvez déployer votre application :
 

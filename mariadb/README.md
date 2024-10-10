@@ -1,6 +1,13 @@
-# Déployer Mariadb
+# l'opérateur Mariadb
 
-La CRD Mariadb offre [un grand nombre de paramètres](https://github.com/mariadb-operator/mariadb-operator/blob/main/examples/manifests/mariadb_full.yaml). Pour notre TP, nous allons nous baser sur [cet exemple](mariadb.yaml) :
+La CRD Mariadb offre [un grand nombre de paramètres](https://github.com/mariadb-operator/mariadb-operator/blob/main/examples/manifests/mariadb_full.yaml). Pour notre TP, nous allons nous baser sur [cet exemple](mariadb.yaml).
+
+## Déploiement de MariaDB
+
+Notre déploiement MariaDB va s'appuyer sur un secret commun entre notre instance Grr et notre base de données :
+
+- Créez un secret ou mieux, un SealedSecret (on en aura besoin plus tard) `mariadb-password` et adaptez votre Chart Helm pour y faire référence.
+- Déployez ensuite votre instance MariaDB :
 
 ```
 kubeclt -f mariadb/mariadb.yaml

@@ -5,19 +5,19 @@ KubeSeal est un opérateur qui met à disposition une nouvelle ressource (CRD) �
 Pour créer un `SealedSecret`, nous allons déjà créer une ressource de type `Secret` en ligne de commande sans l'appliquer au cluster (en mode `dry-run`) :
 
 ```
-kubectl create secret generic --dry-run=client  mariadb-password --from-literal=mariadb-password=supersecret --from-literal=mariadb-root-password=topsecret -o yaml
+kubectl create secret generic --dry-run=client  mariadb-password --from-literal=DB_NAME=grr --from-literal=DB_USER=grr_user --from-literal=DB_PASSWORD=supersecret -o yaml
 ```
 
 Ensuite, nous allons produire une version chiffrée par le cluster :
 
 ```
-kubectl create secret generic --dry-run=client  mariadb-password --from-literal=mariadb-password=supersecret --from-literal=mariadb-root-password=topsecret -o yaml |kubeseal -o yaml
+kubectl create secret generic --dry-run=client  mariadb-password --from-literal=DB_NAME=grr --from-literal=DB_USER=grr_user --from-literal=DB_PASSWORD=supersecret  -o yaml |kubeseal -o yaml
 ```
 
 Et enfin, nous allons l'envoyer dans notre cluster :
 
 ```
-kubectl create secret generic --dry-run=client  mariadb-password --from-literal=mariadb-password=supersecret --from-literal=mariadb-root-password=topsecret -o yaml |kubeseal -o yaml | kubectl create -f -
+kubectl create secret generic --dry-run=client  mariadb-password --from-literal=DB_NAME=grr --from-literal=DB_USER=grr_user --from-literal=DB_PASSWORD=supersecret -o yaml |kubeseal -o yaml | kubectl create -f -
 ```
 
 Je peux maintenant afficher les ressources `SealedSecret` et `Secret` ainsi générées :

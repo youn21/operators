@@ -6,7 +6,7 @@ spec:
   rootPasswordSecretKeyRef:
     generate: false
     name: mariadb-password
-    key: mariadb-root-password
+    key: DB_PASSWORD
   galera:
     enabled: false
   metrics:
@@ -20,6 +20,6 @@ spec:
   passwordSecretKeyRef:
     generate: false
     name: mariadb-password
-    key: mariadb-password
+    key: DB_PASSWORD
   database: grr
   username: grr_user
