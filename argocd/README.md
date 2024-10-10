@@ -15,8 +15,34 @@ Grâce à notre Chart Helm et nos Custom Resources nous allons pouvoir décrire 
 
 ## Installation d'ArgoCD
 
-Comme vous travaillez sur un cluster Kubernetes complet pour la production, tous les outils nécessaires sous forme d'opérateurs sont installés. Vous allez donc pouvoir déployer un service ArgCD, avec la CRD ArgoCD. Cette ressource va instancier les différentes briques : un controleur qui applique l'état souhaité, un controleur qui récupère l'état et un cache redis.
+Comme vous travaillez sur un cluster Kubernetes complet pour la production, tous les outils nécessaires sous forme d'opérateurs sont installés. Vous allez donc pouvoir déployer un service ArgCD, avec la CRD ArgoCD. [Cette ressource](/argocd/argocd.yaml) va instancier les différentes briques : un controleur qui applique l'état souhaité, un controleur qui récupère l'état et un cache redis. La configuration proposée ne fait que réduire les ressources pour travailler dans un contexte mono projet (minimisation des ressources consommées).
 
 ```
 kubectl create -f argocd.yaml
 ```
+
+Les configurations de votre applications sont partagées en deux dossiers, un qui déploie suivant [un chart Helm](/argocd/app/helm) pour Grr et l'autre [suivant des manifests](/argocd/app/manifests) pour Mariadb et les Secret. Ce découpage est nécessaire car ArgoCD ne sais pas traiter ces deux modes de déploiements dans un même répertoire.
+
+Les Secrets contiennent des informations sensibles, qui ne doivent pas être archivées dans un dépôt GIT, c'est pour celà que nous allons créer des SealedSecret, chiffrés, qui eux seront traduits en Secret dans notre instance.
+
+## Déploiement de l'Application en GitOps
+
+Maintenant nous avons la machinerie pour appliquer notre configuration en se basant sur un dépôt GIT de prêt. L'étape suivante est de clôner ce dépôt chez vous et de configurer ArgoCD pour y faire référence. Afin de vous simplifier la vie, clônez le dépôt et rendez-le **public**.
+
+Ce que vous devez faire :
+
+1) modifiez les deux Applications ArgoCD pour pointer sur votre dépôt et corrigez le nom du namespace pour celui correspondant à votre projet Openshift
+2) corrigez l'URL de l'Ingress dans les values du chart Helm
+3) Créez un SealedSecret pour les secrets de connexion à MariaDB
+
+Quand cela est prêt, vous pouvez déployer votre application :
+
+```
+kubectl create -f app/app.yaml
+```
+
+Vous pouvez vous connecter à l'interface web de ArgoCD (retrouvez sa Route : `oc get routes`) en tant qu'admin avec le mot de passe stocké en base64 dans le secret `argocd-grr-secret`
+
+Maintenant, vous n'accédez plus aux commandes `kubectl` ni la console web pour ajouter, supprimer ou modifier votre application. Vous travaillez dorénavant selon le modèle GitOps.
+
+4) Ajoutez le Backup de votre base de données !

@@ -26,7 +26,7 @@ spec:
     namespace: mon_namespace
   project: default
   source:
-    path: argocd/app/static
+    path: argocd/app/manifests
     repoURL: https://plmlab.math.cnrs.fr/anf2024/operators.git
     targetRevision: HEAD
   syncPolicy:
