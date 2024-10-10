@@ -27,4 +27,28 @@ spec:
 - Vous obtiendrez les informations de connexion à votre stockage en interrogeant le Secret et la ConfigMap du nom de votre OBC.
 - Modifiez votre Backup (via votre dépôt GIT ArgoCD) pour [backuper sur un stockage S3](https://github.com/mariadb-operator/mariadb-operator/blob/main/examples/manifests/backup_s3.yaml). 
 
+Voici un exemple de configuration du stockage S3 que vous pouvez utiliser :
+
+```
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Backup
+metadata:
+  name: pra-s3
+spec:
+... # Votre conf de backup précédente
+  storage:
+    s3:
+      accessKeyIdSecretKeyRef:
+        key: AWS_ACCESS_KEY_ID
+        name: pra
+      bucket: pra-62ceec3d-XXXXXXXXXXXXXXXXXXX
+      endpoint: 's3-openshift-storage.apps.anf.math.cnrs.fr:443'
+      prefix: mariadb
+      secretAccessKeySecretKeyRef:
+        key: AWS_SECRET_ACCESS_KEY
+        name: pra
+      tls:
+        enabled: true
+```
+
 Maintenant, vous pouvez détruire votre projet, le récréer, installez votre ArgoCD et c'est reparti !
