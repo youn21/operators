@@ -25,6 +25,7 @@ spec:
 
 - Créez un autre projet et à l'intérieur créez votre ObjectBucketClaim selon l'exemple ci-dessus.
 - Vous obtiendrez les informations de connexion à votre stockage en interrogeant le Secret et la ConfigMap du nom de votre OBC.
+- Créez une ressource SealedSecret reprenant les secrets de connexion à votre Bucket S3 et récupérez le nom de votre bucket dans la configMap 
 - Modifiez votre Backup (via votre dépôt GIT ArgoCD) pour [backuper sur un stockage S3](https://github.com/mariadb-operator/mariadb-operator/blob/main/examples/manifests/backup_s3.yaml). 
 
 Voici un exemple de configuration du stockage S3 que vous pouvez utiliser :
@@ -50,5 +51,7 @@ spec:
       tls:
         enabled: true
 ```
+
+Déposez dans votre dossier `manifests` ArgoCD le SealedSecret et la ressource Backup...
 
 Maintenant, vous pouvez détruire votre projet, le récréer, installez votre ArgoCD et c'est reparti !
