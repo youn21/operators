@@ -41,7 +41,7 @@ Quand cela est prêt, vous pouvez déployer votre application :
 kubectl create -f app/app.yaml
 ```
 
-Vous pouvez vous connecter à l'interface web de ArgoCD (retrouvez sa Route : `oc get routes`) en tant qu'admin avec le mot de passe stocké en base64 dans le secret `argocd-grr-secret`
+Vous pouvez vous connecter à l'interface web de ArgoCD (retrouvez sa Route : `kubectl get routes`) en tant qu'admin avec le mot de passe stocké en base64 dans le secret `argocd-grr-secret`
 
 Maintenant, vous n'accédez plus aux commandes `kubectl` ni la console web pour ajouter, supprimer ou modifier votre application. Vous travaillez dorénavant selon le modèle GitOps.
 
