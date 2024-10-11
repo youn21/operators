@@ -1,0 +1,38 @@
+kind: MariaDB
+apiVersion: k8s.mariadb.com/v1alpha1
+metadata:
+  name: mariadb
+spec:
+  bootstrapFrom:
+    backupRef:
+      name: backup
+    s3:
+      accessKeyIdSecretKeyRef:
+        key: AWS_ACCESS_KEY_ID
+        name: pra
+      bucket: pra-62ceec3d-XXXXXXXXXXXXXXXXXXX
+      endpoint: s3-openshift-storage.apps.anf.math.cnrs.fr:443
+      prefix: mariadb
+      secretAccessKeySecretKeyRef:
+        key: AWS_SECRET_ACCESS_KEY
+        name: pra
+      tls:
+        enabled: true
+  rootPasswordSecretKeyRef:
+    generate: false
+    name: mariadb-password
+    key: DB_PASSWORD
+  metrics:
+    passwordSecretKeyRef:
+      generate: false
+      name: mariadb-metrics
+      key: DB_PASSWORD
+    enabled: true
+  storage:
+    size: 1Gi
+  passwordSecretKeyRef:
+    generate: false
+    name: mariadb-password
+    key: DB_PASSWORD
+  database: grr
+  username: grr_user

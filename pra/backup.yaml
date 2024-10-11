@@ -1,0 +1,31 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Backup
+metadata:
+  name: pra
+spec:
+  args:
+  - --single-transaction
+  - --all-databases
+  ignoreGlobalPriv: false
+  logLevel: info
+  mariaDbRef:
+    name: mariadb
+    waitForIt: true
+  maxRetention: 720h
+  restartPolicy: OnFailure
+  schedule:
+    cron: '* */1 * * *'
+  serviceAccountName: backup
+  storage:
+    s3:
+      accessKeyIdSecretKeyRef:
+        key: AWS_ACCESS_KEY_ID
+        name: pra
+      bucket: pra-62ceec3d-XXXXXXXXXXXXXXXXXXX
+      endpoint: s3-openshift-storage.apps.anf.math.cnrs.fr:443
+      prefix: mariadb
+      secretAccessKeySecretKeyRef:
+        key: AWS_SECRET_ACCESS_KEY
+        name: pra
+      tls:
+        enabled: true
