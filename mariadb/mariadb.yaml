@@ -11,9 +11,9 @@ spec:
     enabled: false
   metrics:
     passwordSecretKeyRef:
-      generate: true
+      generate: false
       name: mariadb-metrics
-      key: password
+      key: DB_PASSWORD
     enabled: true
   storage:
     size: 1Gi

@@ -56,4 +56,6 @@ spec:
 
 Déposez dans votre dossier `manifests` ArgoCD le SealedSecret et la ressource Backup...
 
+- Maintenant, toujours grâce à l'opérateur MariaDB, adaptez juste votre instance MariaDB [pour démarrer sur le dernier Backup](https://github.com/mariadb-operator/mariadb-operator/blob/main/docs/BACKUP.md#bootstrap-new-mariadb-instances) en ajoutant la rubrique `bootstrapFrom`. 
+
 Maintenant, vous pouvez détruire votre projet, le récréer, redéployez `argocd.yaml` et `app.yaml` depuis votre dossier `argocd` et c'est reparti !
