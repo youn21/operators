@@ -20,6 +20,8 @@ ANF Mathrice
 
 CIRM Luminy / Le 16 octobre 2024
 
+[regardez-moi ici](https://codimd.math.cnrs.fr/p/t1ca2RATq#/) ou copiez-collez moi dans codimd...
+
 ---
 
 ## Introduction
