@@ -101,7 +101,7 @@ spec:
     volumeSnapshotClassName: standard-csi-true
   sourcePVC: storage-mariadb-0
   trigger:
-    schedule: '*/3 * * * *'
+    schedule: '* */1 * * *'
 ```
 
 Ici nous mentionnons un *volumeSnapshotClassName* qui définit [un paramètre particulier](https://plmlab.math.cnrs.fr/plmteam/okd-clusters/anf/-/blob/main/openshift-config/storageclass/snapshot-class-adp.yaml?ref_type=heads#L12) qui permet à Kubernetes de demander un VolumeSnapshot même si le PVC en question est utilisé.
