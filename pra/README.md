@@ -56,6 +56,54 @@ spec:
 
 Déposez dans votre dossier `manifests` ArgoCD le SealedSecret et la ressource Backup...
 
-- Maintenant, toujours grâce à l'opérateur MariaDB, adaptez juste votre instance MariaDB [pour démarrer sur le dernier Backup](https://github.com/mariadb-operator/mariadb-operator/blob/main/docs/BACKUP.md#bootstrap-new-mariadb-instances) en ajoutant la rubrique `bootstrapFrom`. 
+- Maintenant, toujours grâce à l'opérateur MariaDB, adaptez juste votre instance MariaDB [pour démarrer sur le dernier Backup](https://github.com/mariadb-operator/mariadb-operator/blob/main/docs/BACKUP.md#bootstrap-new-mariadb-instances) en ajoutant la rubrique `bootstrapFrom`.
 
 Maintenant, vous pouvez détruire votre projet, le récréer, redéployez `argocd.yaml` et `app.yaml` depuis votre dossier `argocd` et c'est reparti !
+
+## Des opérateurs utiles pour un PRA
+
+[Velero](https://velero.io/) est un projet complet de backup et restauration d'applications Kubernetes, son utilisation est pertinente pour la sauvegarde de l'ensemble d'un cluster Kubernetes, donc d'un point de vue infrastructure.
+
+[Volsync](https://volsync.readthedocs.io/en/stable/) est un bon candidat pour mettre en place de la sauvegarde des données persistantes hors de votre cluster. Volsync met à disposition différentes méthodes de copies des données (restic, rclone, rsync via ssh).
+Nous allons utiliser une fonctionnalité de la gestion des stockages sur Kubernetes, c'est à dire la création de VolumeSnapshift (snapshift de système de fichier), de notre stockage S3 *distant* et de la fonctionnalité [rclone de Volsync](https://volsync.readthedocs.io/en/stable/usage/rclone/index.html).
+
+Nous avons besoin de créer un Secret reprenant l'authentification S3 du Secret pra :
+
+```
+kind: Secret
+apiVersion: v1
+metadata:
+  name: rclone-secret
+type: Opaque
+stringData:
+  [rclone-bucket]
+  type = s3
+  provider = Rclone
+  env_auth = false
+  access_key_id = ACCESS_KEY
+  secret_access_key = SECRET_KEY
+  endpoint = https://s3-openshift-storage.apps.anf.math.cnrs.fr
+```
+
+Et ensuite d'un CRD de type [ReplicationSource](https://volsync.readthedocs.io/en/stable/usage/rclone/index.html#source-configuration) :
+
+```
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: volsync
+spec:
+  rclone:
+    copyMethod: Snapshot
+    rcloneConfig: rclone-secret
+    rcloneConfigSection: rclone-bucket
+    rcloneDestPath: pra-62ceec3d-XXXXXXXXXXXXX/mysql-pv-claim
+    volumeSnapshotClassName: standard-csi-true
+  sourcePVC: storage-mariadb-0
+  trigger:
+    schedule: '*/3 * * * *'
+```
+
+Ici nous mentionnons un *volumeSnapshotClassName* qui définit [un paramètre particulier](https://plmlab.math.cnrs.fr/plmteam/okd-clusters/anf/-/blob/main/openshift-config/storageclass/snapshot-class-adp.yaml?ref_type=heads#L12) qui permet à Kubernetes de demander un VolumeSnapshot même si le PVC en question est utilisé.
+
+Il est possible de récupérer les données grâce à un [ReplicationDestination](https://volsync.readthedocs.io/en/stable/usage/rclone/index.html#destination-configuration)
