@@ -17,3 +17,5 @@ Et demain nous verrons :
 - Prometheus
 - Grafana
 
+Retrouvez la [présentation en markdown](PRESENTATION.md) ou en mode présentation sur [codimd](https://codimd.math.cnrs.fr/p/t1ca2RATq#/)
+)
