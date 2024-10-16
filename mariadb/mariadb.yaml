@@ -12,7 +12,7 @@ spec:
   metrics:
     passwordSecretKeyRef:
       generate: false
-      name: mariadb-metrics
+      name: mariadb-password
       key: DB_PASSWORD
     enabled: true
   storage:
