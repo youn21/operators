@@ -4,13 +4,15 @@ grr:
     externalHost: mariadb
     auth:
       existingSecret: mariadb-password
+      username: grr_user
+      database: grr
   ingress:
     enabled: true
     className: "openshift-default"
     annotations:
       route.openshift.io/termination: edge
     hosts:
-      - host: change_me.apps.anf.math.cnrs.fr
+      - host: kbargo.apps.anf.math.cnrs.fr
         paths:
           - path: /
             pathType: Prefix
