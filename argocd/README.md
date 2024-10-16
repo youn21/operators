@@ -46,3 +46,14 @@ Vous pouvez vous connecter à l'interface web de ArgoCD (retrouvez sa Route : `k
 Maintenant, vous n'accédez plus aux commandes `kubectl` ni la console web pour ajouter, supprimer ou modifier votre application. Vous travaillez dorénavant selon le modèle GitOps.
 
 4) Ajoutez le Backup de votre base de données !
+
+## Bonne pratique du parfait GitOps
+
+Maintenant, nous allons pouvoir mettre en oeuvre ces bonnes pratiques au quotidien.
+
+- Je gère mes images de conteneurs via un dépôt GIT avec de l'intégration continue afin de gérer des versions basées sur des branches et des tags
+- Je gère mes applications à travers du packaging comme Helm et déposé dans un service de packaging
+- Je déploie mon application via un dépôt GIT contenant les références à mes packages et gérant les montées en version
+- Je peux profiter des opérateurs et/ou des charts Helm fournis par les développeurs d'applications sur étagère
+
+![](gitopshift2.drawio.png)
