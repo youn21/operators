@@ -1,0 +1,10 @@
+kind: ObjectBucketClaim
+apiVersion: objectbucket.io/v1alpha1
+metadata:
+  name: pra
+spec:
+  additionalConfig:
+    bucketclass: local-bucketclass
+    maxSize: 1G
+  generateBucketName: pra
+  storageClassName: local-storage.noobaa.io
