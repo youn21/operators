@@ -3,9 +3,12 @@ kind: Backup
 metadata:
   name: pra
 spec:
-  args:
-  - --single-transaction
-  - --all-databases
+  additionalConfig:
+    bucketclass: local-bucketclass
+    maxSize: 1G
+  generateBucketName: pra
+  storageClassName: local-storage.noobaa.io
+
   ignoreGlobalPriv: false
   logLevel: info
   mariaDbRef:
