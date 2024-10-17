@@ -1,6 +1,6 @@
 grr:
   mariadb:
-    enabled: true
+    enabled: false
     externalHost: mariadb
     auth:
       existingSecret: mariadb-password
